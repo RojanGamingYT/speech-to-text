@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text Web App</title>
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+     body {  
+     background: mediumseagreen;  
+     font-family: poppins;
+     height: 100vh;  
+     display: flex;  
+     align-items: center;  
+     justify-content: center;
+    }  
+    h1 {  
+     text-align: center;  
+     margin-top: 3rem;  
+    }  
+    .container {  
+     display: flex;  
+     justify-content: center;  
+     height: 300px;  
+     width: 500px;  
+     background-color: white;
+     border-radius: 5px;  
+     font-size: 2rem;  
+     padding: 1rem;  
+     margin: 2rem;  
+    }    
+    .box{
+     display: flex;  
+     align-items: center;  
+     justify-content: center;  
+     flex-direction: column; 
+     background: rgba( 255, 255, 255, 0.25 );
+     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+     backdrop-filter: blur( 4px );
+     -webkit-backdrop-filter: blur( 4px );
+     border-radius: 10px;
+     border: 1px solid rgba( 255, 255, 255, 0.18 );
+    }
+    .button {  
+     text-align: center;  
+     cursor: pointer;  
+     font-size: 24px;  
+     position: relative;  
+     background-color: gold;  
+     border: none;  
+     padding: 20px;    
+     text-align: center;  
+     text-decoration: none;  
+     overflow: hidden;  
+     transition: 0.3s;
+     user-select:none;
+    }  
+    .button:hover {  
+     background: #000;   
+     color: #fff;  
+    }  
+    
+</style>
+<body>
+    <div class="box">
+    <h1>Speech To Text Web App</h1>  
+   <button class="button" id="btn" onclick="recognition.start()">  
+    Click to Start App  
+   </button>  
+   <div id="result" class="container">  
+    <p>The detected text will appear here</p>  
+   </div>  
+   <button class="button" onclick="copyToClipboard()">  
+    Copy the detected text. 
+   </button>
+   &nbsp;
+   </div>
+</body>
+<script>
+    const btn = document.getElementById("btn");  
+ const results = document.getElementById("result");  
+ const speechRecognition = window.speechRecognition || window.webkitSpeechRecognition;  
+ const recognition = new speechRecognition();  
+ recognition.onstart = function(){  
+   console.log("you can speak now");  
+ }  
+ recognition.onresult = function(event){  
+   var text = event.results[0][0].transcript;  
+   console.log(text);  
+   document.getElementById("result").innerHTML = text;  
+ }  
+ function copyToClipboard() {  
+   var range = document.createRange();  
+   range.selectNode(document.getElementById("result"));  
+   window.getSelection().removeAllRanges(); // clear current selection  
+   window.getSelection().addRange(range); // to select text  
+   document.execCommand("copy");  
+   window.getSelection().removeAllRanges();// to deselect  
+   alert("Copied the text:")  
+ }  
+</script>
+</html>
